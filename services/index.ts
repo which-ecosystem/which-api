@@ -1,3 +1,4 @@
+import { Application } from '@feathersjs/express';
 import Users from './users/users.service';
 import Polls from './polls/polls.service';
 

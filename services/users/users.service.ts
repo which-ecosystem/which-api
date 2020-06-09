@@ -1,7 +1,10 @@
 import { Application } from '@feathersjs/express';
-import Users from './users.class';
+import Model from '../../models/users/user.model';
+import service from 'feathers-mongoose';
+
+const UserService = service({ Model });
 
 export default (app: Application): void => {
-  app.use('/users', new Users());
+  app.use('/users', UserService);
 };
 

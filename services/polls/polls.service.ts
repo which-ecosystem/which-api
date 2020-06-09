@@ -1,7 +1,10 @@
 import { Application } from '@feathersjs/express';
-import Polls from './polls.class';
+import Model from '../../models/polls/poll.model';
+import service from 'feathers-mongoose';
+
+const PollService = service({ Model });
 
 export default (app: Application): void => {
-  app.use('/polls', new Polls());
+  app.use('/polls', PollService);
 };
 
