@@ -4,6 +4,7 @@ import express from '@feathersjs/express';
 import socketio from '@feathersjs/socketio';
 
 import { PollService } from './PollService';
+import {UserService} from "./UserService";
 
 const app = express(feathers());
 
@@ -15,7 +16,7 @@ app.configure(socketio());
 app.use(express.errorHandler());
 
 app.use('/polls', new PollService());
-
+app.use('/users', new UserService());
 
 // Add any new real-time connection to the `everybody` channel
 app.on('connection', connection =>
@@ -41,5 +42,14 @@ app.service('polls').create({
       url: 'https://github.com/ilyayudovin.png',
       votes: 15
     }
+  }
+});
+
+app.service('users').create({
+  info: {
+    name: 'John Doe',
+    age: 20,
+    nationality: 'Belarus',
+    sex: 'male'
   }
 });

@@ -1,7 +1,6 @@
 {
   "name": "@oneflow/which-api",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -14,5 +13,14 @@
     "@feathersjs/feathers": "^4.5.3",
     "@feathersjs/socketio": "^4.5.4",
     "@feathersjs/transport-commons": "^4.5.3"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eug-vs/which-api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/eug-vs/which-api/issues"
+  },
+  "homepage": "https://github.com/eug-vs/which-api#readme",
+  "description": ""
 }
