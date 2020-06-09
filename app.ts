@@ -1,10 +1,10 @@
 import feathers from '@feathersjs/feathers';
-import '@feathersjs/transport-commons';
 import express from '@feathersjs/express';
 import socketio from '@feathersjs/socketio';
+import '@feathersjs/transport-commons';
 
-import { PollService } from './PollService';
-import {UserService} from "./UserService";
+import services from './services';
+
 
 const app = express(feathers());
 
@@ -14,24 +14,10 @@ app.use(express.static(__dirname));
 app.configure(express.rest());
 app.configure(socketio());
 app.use(express.errorHandler());
-
-app.use('/polls', new PollService());
-app.use('/users', new UserService());
-
-// Add any new real-time connection to the `everybody` channel
-app.on('connection', connection =>
-  app.channel('everybody').join(connection)
-);
-// Publish all events to the `everybody` channel
-app.publish(data => app.channel('everybody'));
+app.configure(services);
 
 
-app.listen(3030).on('listening', () =>
-  console.log('Feathers server listening on localhost:3030')
-);
-
-// For good measure let's create a message
-// So our API doesn't look so empty
+// Mock data
 app.service('polls').create({
   contents: {
     left: {
@@ -50,4 +36,6 @@ app.service('users').create({
     age: 20,
     avatarUrl: 'https://github.com/ilyayudovin.png'
 });
+
+export default app;
 

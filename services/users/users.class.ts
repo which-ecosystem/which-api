@@ -4,7 +4,7 @@ interface User {
   age?: number;
 }
 
-export class UserService {
+export default class Users {
   users: User[] = [];
 
   async find (){
