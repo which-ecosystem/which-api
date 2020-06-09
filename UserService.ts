@@ -1,10 +1,7 @@
 interface User {
-  info : {
-    name: string;
-    age: number;
-    nationality: string;
-    sex: string;
-  }
+  name: string;
+  avatarUrl?: string;
+  age?: number;
 }
 
 export class UserService {
@@ -14,9 +11,10 @@ export class UserService {
     return this.users;
   }
 
-  async create(data: Pick<User, 'info'>){
-    const user: User = {...data};
+  async create(data: Pick<User, 'name' | 'avatarUrl' | 'age'>){
+    const user: User = { ...data };
     this.users.push(user);
     return user;
   }
 }
+

@@ -46,10 +46,8 @@ app.service('polls').create({
 });
 
 app.service('users').create({
-  info: {
     name: 'John Doe',
     age: 20,
-    nationality: 'Belarus',
-    sex: 'male'
-  }
+    avatarUrl: 'https://github.com/ilyayudovin.png'
 });
+
