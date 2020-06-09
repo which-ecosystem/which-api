@@ -8,7 +8,7 @@ interface User {
   avatarUrl: string;
 }
 
-export interface Poll {
+interface Poll {
   author: User;
   contents: {
     left: ImageData;
@@ -22,7 +22,7 @@ const defaultUser: User = {
 };
 
 
-export class PollService {
+export default class Polls {
   polls: Poll[] = [];
 
   async find () {
