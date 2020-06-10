@@ -1,16 +1,21 @@
 import { Document, Schema, Types } from 'mongoose';
+import { User } from '../users/user.schema'
 
 interface ImageData {
   url: string;
   votes: number;
 }
 
-export interface PollSchema extends Document {
-  authorId: string;
+export interface Poll {
+  author: User;
   contents: {
     left: ImageData;
     right: ImageData;
   };
+}
+
+export interface PollSchema extends Document, Omit<Poll, 'author'> {
+  authorId: string;
 }
 
 
