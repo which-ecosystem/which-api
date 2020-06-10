@@ -1,12 +1,11 @@
 import { Document, Schema, Types } from 'mongoose';
-import { User } from '../users/user.schema';
 
 interface ImageData {
   url: string;
   votes: number;
 }
 
-export interface Poll extends Document {
+export interface PollSchema extends Document {
   authorId: string;
   contents: {
     left: ImageData;
@@ -20,7 +19,7 @@ const imageDataSchema = {
   votes: Number
 }
 
-export const PollSchema = new Schema({
+export const pollSchema = new Schema({
   contents: {
     left: imageDataSchema,
     right: imageDataSchema
