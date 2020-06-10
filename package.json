@@ -1,7 +1,7 @@
 {
-  "name": "@oneflow/which-api",
+  "name": "which-api",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,8 +13,9 @@
     "@feathersjs/feathers": "^4.5.3",
     "@feathersjs/socketio": "^4.5.4",
     "@feathersjs/transport-commons": "^4.5.3",
-    "@types/mongoose": "^5.7.23",
+    "cors": "^2.8.5",
     "feathers-mongoose": "^8.3.0",
+    "lodash": "^4.17.15",
     "mongoose": "^5.9.18"
   },
   "repository": {
@@ -25,5 +26,11 @@
     "url": "https://github.com/eug-vs/which-api/issues"
   },
   "homepage": "https://github.com/eug-vs/which-api#readme",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "@types/bluebird": "^3.5.32",
+    "@types/cors": "^2.8.6",
+    "@types/lodash": "^4.14.155",
+    "@types/mongoose": "^5.7.23"
+  }
 }
