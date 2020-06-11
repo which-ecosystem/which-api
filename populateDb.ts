@@ -23,23 +23,23 @@ const polls = [{
   contents: {
     left:{
       url: 'https://cdn.psychologytoday.com/sites/default/files/field_blog_entry_images/2019-06/pexels-photo-556667.jpeg',
-      votes: 0
-    },
+      votes: Math.floor(Math.random() * 101)
+},
     right:{
       url: 'https://images.pexels.com/photos/556666/pexels-photo-556666.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-      votes: 0
-    }
+      votes: Math.floor(Math.random() * 101)
+}
   }
 },{
   contents: {
     left:{
       url: 'https://cdn.psychologytoday.com/sites/default/files/field_blog_entry_images/2019-06/pexels-photo-556667.jpeg',
-      votes: 0
-    },
+      votes: Math.floor(Math.random() * 101)
+},
     right:{
       url: 'https://images.pexels.com/photos/556666/pexels-photo-556666.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-      votes: 0
-    }
+      votes: Math.floor(Math.random() * 101)
+}
   }
 }];
 
