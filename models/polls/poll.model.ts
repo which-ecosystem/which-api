@@ -1,5 +1,5 @@
-import { Model, model } from "mongoose"
+import { Model, model } from 'mongoose';
 import { PollSchema, pollSchema } from './poll.schema';
 
-export default model<PollSchema, Model<PollSchema>>("Poll", pollSchema);
+export default model<PollSchema, Model<PollSchema>>('Poll', pollSchema);
 

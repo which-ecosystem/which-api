@@ -1,7 +1,7 @@
 import { Application } from '@feathersjs/express';
-import Model from '../../models/polls/poll.model';
 import service from 'feathers-mongoose';
-import hooks from './polls.hooks'
+import Model from '../../models/polls/poll.model';
+import hooks from './polls.hooks';
 
 const PollService = service({ Model });
 

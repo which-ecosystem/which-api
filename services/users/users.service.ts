@@ -1,6 +1,6 @@
 import { Application } from '@feathersjs/express';
-import Model from '../../models/users/user.model';
 import service from 'feathers-mongoose';
+import Model from '../../models/users/user.model';
 
 const UserService = service({ Model });
 

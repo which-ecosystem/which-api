@@ -37,7 +37,7 @@ const createPoll = (authorId: string): Promise<PollSchema> => {
   return app.service('polls').create({
     contents: {
       left: generateImageData(),
-      right: generateImageData(),
+      right: generateImageData()
     },
     authorId
   });
@@ -57,7 +57,7 @@ const populate = async () => {
   for (let i = 0; i < POLLS_AMOUNT; i++) {
     const sampleUser = _.sample(users);
     await createPoll(sampleUser?._id);
-  };
+  }
 };
 
 populate().finally(mongoose.disconnect);
