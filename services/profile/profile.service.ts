@@ -1,16 +1,7 @@
-import {User} from '../../models/users/user.schema';
-import {Poll} from "../../models/polls/poll.schema";
-import {Application} from "@feathersjs/express";
-
-export class ProfileService {
-  user: User = Object;
-  saved_polls: Poll[] = [];
-
-  async find () {
-    return [this.user, this.saved_polls];
-  }
-}
+import { Application } from "@feathersjs/express";
+import Profiles from './profile.class';
 
 export default (app: Application): void => {
-  app.use('/profile', new ProfileService());
+  app.use('/profile', new Profiles());
 };
+
