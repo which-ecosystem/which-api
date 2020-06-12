@@ -1,5 +1,5 @@
 import { Document, Schema, Types } from 'mongoose';
-import { User } from '../users/user.schema'
+import { User } from '../users/user.schema';
 
 export interface ImageData {
   url: string;
@@ -22,14 +22,14 @@ export interface PollSchema extends Document, Omit<Poll, 'author'> {
 const imageDataSchema = {
   url: String,
   votes: Number
-}
+};
 
 export const pollSchema = new Schema({
   contents: {
     left: imageDataSchema,
     right: imageDataSchema
   },
-  authorId: { 
+  authorId: {
     type: Types.ObjectId,
     ref: 'User'
   }

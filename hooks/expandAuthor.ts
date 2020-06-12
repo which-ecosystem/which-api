@@ -25,7 +25,7 @@ export const expandAuthorHook = async (context: HookContext): Promise<HookContex
 };
 
 export const expandAuthorManyHook = async (context: HookContext): Promise<HookContext> => {
-  const polls = await bluebird.map(context.result, (poll: any) => expandAuthor(poll));
+  const polls = await bluebird.map(context.result, (poll: PollSchema) => expandAuthor(poll));
   context.result = _.compact(polls);
   return context;
 };

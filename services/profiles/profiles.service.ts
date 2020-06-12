@@ -1,4 +1,4 @@
-import { Application } from "@feathersjs/express";
+import { Application } from '@feathersjs/express';
 import Profiles from './profiles.class';
 
 import hooks from './profiles.hooks';
