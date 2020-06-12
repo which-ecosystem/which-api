@@ -54,10 +54,10 @@ const createUser = (name: string): Promise<UserSchema> => {
 const populate = async () => {
   const users = await bluebird.map(names, name => createUser(name));
 
-  for (let i = 0; i < POLLS_AMOUNT; i++) {
+  await bluebird.mapSeries(new Array(POLLS_AMOUNT), async () => {
     const sampleUser = _.sample(users);
-    await createPoll(sampleUser?._id);
-  }
+    return createPoll(sampleUser?._id);
+  });
 };
 
 populate().finally(mongoose.disconnect);
