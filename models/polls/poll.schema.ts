@@ -1,7 +1,7 @@
 import { Document, Schema, Types } from 'mongoose';
 import { User } from '../users/user.schema'
 
-interface ImageData {
+export interface ImageData {
   url: string;
   votes: number;
 }
