@@ -1,0 +1,14 @@
+{
+  "authentication": {
+    "secret": "2JtbBy2ycQ1V3kQfPcSgXYmFsB7",
+    "service": "users",
+    "authStrategies": [
+      "jwt",
+      "local"
+    ],
+    "local": {
+      "usernameField": "name",
+      "passwordField": "password"
+    }
+  }
+}
