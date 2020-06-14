@@ -6,10 +6,13 @@ export interface User {
   age?: number;
 }
 
-export interface UserSchema extends Document, User {}
+export interface UserSchema extends Document, User {
+  password: string;
+}
 
 export const userSchema = new Schema({
   name: String,
+  password: String,
   avatarUrl: {
     type: String,
     required: false
