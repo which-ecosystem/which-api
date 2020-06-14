@@ -46,6 +46,7 @@ const createPoll = (authorId: string): Promise<PollSchema> => {
 const createUser = (name: string): Promise<UserSchema> => {
   return app.service('users').create({
     avatarUrl: _.sample(imageUrls) || '',
+    password: 'supersecret',
     name
   });
 };
