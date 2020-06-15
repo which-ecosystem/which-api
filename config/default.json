@@ -2,6 +2,7 @@
   "authentication": {
     "secret": "2JtbBy2ycQ1V3kQfPcSgXYmFsB7",
     "service": "users",
+    "entity": "user",
     "authStrategies": [
       "jwt",
       "local"
