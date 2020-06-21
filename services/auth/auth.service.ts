@@ -1,6 +1,6 @@
 import {
   AuthenticationService,
-  JWTStrategy 
+  JWTStrategy
 } from '@feathersjs/authentication';
 import { LocalStrategy } from '@feathersjs/authentication-local';
 import { Application } from '@feathersjs/express';

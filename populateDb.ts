@@ -29,9 +29,7 @@ const names: string[] = [
 ];
 
 
-
 const createPoll = (authorId: string, generateImageData:()=> ImageDataSchema): Promise<PollSchema> => {
-
   return app.service('polls').create({
     contents: {
       left: generateImageData(),
@@ -60,7 +58,7 @@ const populate = async () => {
 
   await bluebird.mapSeries(new Array(POLLS_AMOUNT), async () => {
     const sampleUser = _.sample(users);
-    return createPoll(sampleUser?._id,generateImageData);
+    return createPoll(sampleUser?._id, generateImageData);
   });
 };
 

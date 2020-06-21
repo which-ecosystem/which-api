@@ -21,7 +21,8 @@
     "cors": "^2.8.5",
     "feathers-mongoose": "^8.3.0",
     "lodash": "^4.17.15",
-    "mongoose": "^5.9.18"
+    "mongoose": "^5.9.18",
+    "which-types": "^1.0.3"
   },
   "repository": {
     "type": "git",

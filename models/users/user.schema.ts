@@ -1,10 +1,5 @@
 import { Document, Schema } from 'mongoose';
-
-export interface User {
-  name: string;
-  avatarUrl?: string;
-  age?: number;
-}
+import { User } from 'which-types';
 
 export interface UserSchema extends Document, User {
   password: string;
