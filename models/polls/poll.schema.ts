@@ -11,6 +11,7 @@ export interface PollSchema extends Document {
     right: ImageDataSchema;
   };
   authorId: string;
+  vote: (userId: string, which: 'left' | 'right') => void;
 }
 
 export const imageDataSchema = {
