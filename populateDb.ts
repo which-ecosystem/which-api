@@ -3,7 +3,7 @@ import bluebird from 'bluebird';
 import _ from 'lodash';
 import app from './app';
 import { UserSchema } from './models/users/user.schema';
-import { PollSchema, ImageData } from './models/polls/poll.schema';
+import { PollSchema, ImageDataSchema } from './models/polls/poll.schema';
 
 mongoose.connect('mongodb://localhost:27017/which', { useNewUrlParser: true });
 
@@ -28,12 +28,10 @@ const names: string[] = [
   'William'
 ];
 
-const generateImageData = (): ImageData => ({
-  url: _.sample(imageUrls) || '',
-  votes: Math.floor(Math.random() * 101)
-});
 
-const createPoll = (authorId: string): Promise<PollSchema> => {
+
+const createPoll = (authorId: string, generateImageData:()=> ImageDataSchema): Promise<PollSchema> => {
+
   return app.service('polls').create({
     contents: {
       left: generateImageData(),
@@ -55,9 +53,14 @@ const createUser = (name: string): Promise<UserSchema> => {
 const populate = async () => {
   const users = await bluebird.map(names, name => createUser(name));
 
+  const generateImageData = (): ImageDataSchema => ({
+    url: _.sample(imageUrls) || '',
+    votes: _.sampleSize(users.map(user => user._id), Math.floor(Math.random() * users.length))
+  });
+
   await bluebird.mapSeries(new Array(POLLS_AMOUNT), async () => {
     const sampleUser = _.sample(users);
-    return createPoll(sampleUser?._id);
+    return createPoll(sampleUser?._id,generateImageData);
   });
 };
 

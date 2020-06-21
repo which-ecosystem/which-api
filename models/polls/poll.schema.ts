@@ -7,6 +7,7 @@ export interface ImageData {
 }
 
 export interface Poll {
+  _id: string;
   author: User;
   contents: {
     left: ImageData;
@@ -14,14 +15,22 @@ export interface Poll {
   };
 }
 
-export interface PollSchema extends Document, Omit<Poll, 'author'> {
+export interface ImageDataSchema {
+  url: string;
+  votes: string[];
+}
+
+export interface PollSchema extends Document {
+  contents: {
+    left: ImageDataSchema;
+    right: ImageDataSchema;
+  };
   authorId: string;
 }
 
-
-const imageDataSchema = {
+export const imageDataSchema = {
   url: String,
-  votes: Number
+  votes: [Types.ObjectId]
 };
 
 export const pollSchema = new Schema({
