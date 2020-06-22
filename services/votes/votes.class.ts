@@ -3,12 +3,14 @@ import { PollSchema } from '../../models/polls/poll.schema';
 
 export default class Votes {
   async create(data: any, params: any): Promise<PollSchema | null> {
-    return PollModel.findById(params.route.id)
-      .then(poll => poll?.vote(params.user._id, data.which))
-      .catch(e => {
-        console.error(e);
-        return null;
-      });
+    const poll = await PollModel.findById(params.route.id);
+    if (poll) {
+      const which: 'left' | 'right' = data.which;
+      const { user } = params;
+      poll.contents[which].votes.push(user._id);
+      return poll.save();
+    }
+    return null;
   }
 }
 
