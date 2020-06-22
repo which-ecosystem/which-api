@@ -1,10 +1,8 @@
-import {
-  convertPollManyHook
-} from '../../hooks/convertPoll';
+import convertPoll from '../../hooks/convertPoll';
 
 export default {
   after: {
-    get: [convertPollManyHook]
+    all: [convertPoll]
   }
 };
 

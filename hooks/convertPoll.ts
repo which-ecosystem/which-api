@@ -4,42 +4,37 @@ import _ from 'lodash';
 import { Poll, User } from 'which-types';
 
 import { PollSchema } from '../models/polls/poll.schema';
-import UserModel from '../models/users/user.model';
 
-const convertPoll = async (poll: PollSchema): Promise<Poll | null> => {
-  return UserModel.findById(poll.authorId)
-    .lean<User>()
-    .exec()
-    .then((author: User | null): Poll | null => {
-      return author && _.merge(
-        _.omit(poll, ['authorId']),
-        {
-          author,
-          contents: {
-            left: {
-              votes: poll.contents.left.votes.length
-            },
-            right: {
-              votes: poll.contents.right.votes.length
+
+export default async (context: HookContext): Promise<HookContext> => {
+  const { app, result } = context;
+
+  const convert = async (poll: PollSchema): Promise<Poll | null> => {
+    return app.service('users').get(poll.authorId)
+      .then((author: User | null): Poll | null => {
+        return author && _.merge(
+          _.omit(poll, ['authorId']),
+          {
+            author,
+            contents: {
+              left: {
+                votes: poll.contents.left.votes.length
+              },
+              right: {
+                votes: poll.contents.right.votes.length
+              }
             }
           }
-        }
-      );
-    })
-    .catch(err => {
-      console.error(err);
-      return err;
-    });
-};
+        );
+      });
+  };
 
-export const convertPollHook = async (context: HookContext): Promise<HookContext> => {
-  context.result = await convertPoll(context.result);
-  return context;
-};
-
-export const convertPollManyHook = async (context: HookContext): Promise<HookContext> => {
-  const polls = await bluebird.map(context.result, (poll: PollSchema) => convertPoll(poll));
-  context.result = _.compact(polls);
+  if (Array.isArray(result)) {
+    const polls = await bluebird.map(result, (poll: PollSchema) => convert(poll));
+    context.result = _.compact(polls);
+  } else {
+    context.result = await convert(result);
+  }
   return context;
 };
 
