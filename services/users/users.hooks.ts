@@ -3,16 +3,15 @@ import { HookContext } from '@feathersjs/feathers';
 
 const hashPassword = hooks.hashPassword('password');
 
-const protectPassword = async (context: HookContext): Promise<HookContext> => {
-  const { dispatch } = hooks.protect('password')(context);
-  context.result = dispatch;
-  context.dispatch = dispatch;
+const localDispatch = async (context: HookContext): Promise<HookContext> => {
+  context.result = context.dispatch;
   return context;
 }
 
 export default {
   after: {
-    all: [protectPassword]
+    all: [hooks.protect('password')],
+    get: [localDispatch] // Protect password from local get's
   },
   before: {
     create: [hashPassword],
