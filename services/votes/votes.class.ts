@@ -8,7 +8,8 @@ export default class Votes {
       const which: 'left' | 'right' = data.which;
       const { user } = params;
       poll.contents[which].votes.push(user._id);
-      return poll.save();
+      poll.save();
+      return poll.toObject();
     }
     return null;
   }
