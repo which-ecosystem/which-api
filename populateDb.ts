@@ -39,11 +39,11 @@ const createPoll = (authorId: string, generateImageData:()=> ImageDataSchema): P
   });
 };
 
-const createUser = (name: string): Promise<UserSchema> => {
+const createUser = (username: string): Promise<UserSchema> => {
   return app.service('users').create({
     avatarUrl: _.sample(imageUrls) || '',
     password: 'supersecret',
-    name
+    username
   });
 };
 

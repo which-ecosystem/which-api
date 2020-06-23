@@ -8,7 +8,7 @@
       "local"
     ],
     "local": {
-      "usernameField": "name",
+      "usernameField": "username",
       "passwordField": "password"
     }
   }

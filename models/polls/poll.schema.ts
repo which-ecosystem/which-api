@@ -10,6 +10,7 @@ export interface PollSchema extends Document {
     left: ImageDataSchema;
     right: ImageDataSchema;
   };
+  createdAt: Date;
   authorId: string;
   vote: (userId: string, which: 'left' | 'right') => PollSchema;
 }
@@ -28,5 +29,5 @@ export const pollSchema = new Schema({
     type: Types.ObjectId,
     ref: 'User'
   }
-});
+}, { timestamps: true });
 
