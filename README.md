@@ -2,7 +2,7 @@
 REST API for [Which](https://github.com/ilyayudovin/which/) - social web-app focused on choosing between two options (images). 
 
 ## Development :hammer_and_wrench:
-Track our progress - [KANBAN board](https://github.com/ilyayudovin/which/projects/1):fire:
+Track our progress - [KANBAN board](https://github.com/orgs/which-ecosystem/projects/1):fire:
 
 ### Technology stack
 - [Typescript](https://www.typescriptlang.org/)
@@ -12,5 +12,6 @@ Track our progress - [KANBAN board](https://github.com/ilyayudovin/which/project
 
 ### Building and running
 ```
+ts-node populateDb.ts
 ts-node-dev index.ts
 ```
