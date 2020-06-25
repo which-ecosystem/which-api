@@ -60,7 +60,7 @@ const createVote = (userId: string, pollId: string): Promise<Vote> => {
   return app.service('votes').create({
     pollId,
     which: _.sample(choices)
-  }, { user: { _id: userId } });
+  }, { user: { _id: userId }, authenticated: true });
 };
 
 
