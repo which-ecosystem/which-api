@@ -6,6 +6,7 @@ import Votes from './votes/votes.service';
 import Auth from './auth/auth.service';
 
 import tryAuthenticate from '../hooks/tryAuthenticate';
+import logging from '../hooks/logging';
 
 export default (app: Application): void => {
   app.configure(Auth);
@@ -17,6 +18,9 @@ export default (app: Application): void => {
   app.hooks({
     before: {
       all: tryAuthenticate
+    },
+    after: {
+      all: logging
     }
   });
 };
