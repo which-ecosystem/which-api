@@ -1,13 +1,14 @@
 import mongoose from 'mongoose';
 import bluebird from 'bluebird';
 import _ from 'lodash';
+import { User, Poll, Vote } from 'which-types';
+
 import app from './app';
-import { UserSchema } from './models/users/user.schema';
-import { PollSchema, ImageDataSchema } from './models/polls/poll.schema';
 
 mongoose.connect('mongodb://localhost:27017/which', { useNewUrlParser: true });
 
 const POLLS_AMOUNT = 20;
+const VOTES_AMOUNT = 160;
 
 const imageUrls: string[] = [
   // eslint-disable max-len
@@ -28,8 +29,17 @@ const names: string[] = [
   'William'
 ];
 
+const choices = [
+  'left',
+  'right'
+];
 
-const createPoll = (authorId: string, generateImageData:()=> ImageDataSchema): Promise<PollSchema> => {
+
+const createPoll = (authorId: string): Promise<Poll> => {
+  const generateImageData = () => ({
+    url: _.sample(imageUrls) || '',
+  });
+
   return app.service('polls').create({
     contents: {
       left: generateImageData(),
@@ -39,7 +49,7 @@ const createPoll = (authorId: string, generateImageData:()=> ImageDataSchema): P
   });
 };
 
-const createUser = (username: string): Promise<UserSchema> => {
+const createUser = (username: string): Promise<User> => {
   return app.service('users').create({
     avatarUrl: _.sample(imageUrls) || '',
     password: 'supersecret',
@@ -47,18 +57,28 @@ const createUser = (username: string): Promise<UserSchema> => {
   });
 };
 
+const createVote = (userId: string, pollId: string): Promise<Vote> => {
+  return app.service('votes').create({
+    userId,
+    pollId,
+    which: _.sample(choices)
+  });
+}
+
 
 const populate = async () => {
   const users = await bluebird.map(names, name => createUser(name));
 
-  const generateImageData = (): ImageDataSchema => ({
-    url: _.sample(imageUrls) || '',
-    votes: _.sampleSize(users.map(user => user._id), Math.floor(Math.random() * users.length))
+  const polls = await bluebird.mapSeries(new Array(POLLS_AMOUNT), async () => {
+    const user = _.sample(users);
+    return createPoll(user?._id || '');
+
   });
 
-  await bluebird.mapSeries(new Array(POLLS_AMOUNT), async () => {
-    const sampleUser = _.sample(users);
-    return createPoll(sampleUser?._id, generateImageData);
+  const votes = await bluebird.mapSeries(new Array(VOTES_AMOUNT), async () => {
+    const user = _.sample(users);
+    const poll = _.sample(polls);
+    return createVote(user?._id || '', poll?._id || '');
   });
 };
 
