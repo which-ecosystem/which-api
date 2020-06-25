@@ -2,7 +2,7 @@ import { HookContext } from '@feathersjs/feathers';
 import { Types } from 'mongoose';
 import bluebird from 'bluebird';
 import _ from 'lodash';
-import { Poll, User, Vote } from 'which-types';
+import { Poll } from 'which-types';
 
 import { PollSchema } from '../models/polls/poll.schema';
 import VoteModel from '../models/votes/vote.model';
@@ -18,7 +18,7 @@ export default async (context: HookContext): Promise<HookContext> => {
       { $match: { pollId: Types.ObjectId(poll._id) } },
       { $group: { _id: '$which', total: { $sum: 1 } } }
     ]).then(groups => groups.reduce(
-      (acc, group) =>  _.set(acc, group._id + '.votes', group.total),
+      (acc, group) => _.set(acc, `${group._id}.votes`, group.total),
       { left: { votes: 0 }, right: { votes: 0 } }
     ));
 
