@@ -1,27 +1,21 @@
 import { Document, Schema, Types } from 'mongoose';
-import { User } from '../users/user.schema';
 
-export interface ImageData {
+export interface ImageDataSchema {
   url: string;
-  votes: number;
 }
 
-export interface Poll {
-  author: User;
+export interface PollSchema extends Document {
   contents: {
-    left: ImageData;
-    right: ImageData;
+    left: ImageDataSchema;
+    right: ImageDataSchema;
   };
-}
-
-export interface PollSchema extends Document, Omit<Poll, 'author'> {
+  createdAt: Date;
   authorId: string;
+  vote: (userId: string, which: 'left' | 'right') => PollSchema;
 }
 
-
-const imageDataSchema = {
+export const imageDataSchema = {
   url: String,
-  votes: Number
 };
 
 export const pollSchema = new Schema({
@@ -33,5 +27,5 @@ export const pollSchema = new Schema({
     type: Types.ObjectId,
     ref: 'User'
   }
-});
+}, { timestamps: true });
 

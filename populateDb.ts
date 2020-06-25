@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 import bluebird from 'bluebird';
 import _ from 'lodash';
+import { User, Poll, Vote } from 'which-types';
+
 import app from './app';
-import { UserSchema } from './models/users/user.schema';
-import { PollSchema, ImageData } from './models/polls/poll.schema';
 
 mongoose.connect('mongodb://localhost:27017/which', { useNewUrlParser: true });
 
@@ -28,12 +28,17 @@ const names: string[] = [
   'William'
 ];
 
-const generateImageData = (): ImageData => ({
-  url: _.sample(imageUrls) || '',
-  votes: Math.floor(Math.random() * 101)
-});
+const choices = [
+  'left',
+  'right'
+];
 
-const createPoll = (authorId: string): Promise<PollSchema> => {
+
+const createPoll = (authorId: string): Promise<Poll> => {
+  const generateImageData = () => ({
+    url: _.sample(imageUrls) || '',
+  });
+
   return app.service('polls').create({
     contents: {
       left: generateImageData(),
@@ -43,21 +48,33 @@ const createPoll = (authorId: string): Promise<PollSchema> => {
   });
 };
 
-const createUser = (name: string): Promise<UserSchema> => {
+const createUser = (username: string): Promise<User> => {
   return app.service('users').create({
     avatarUrl: _.sample(imageUrls) || '',
     password: 'supersecret',
-    name
+    username
   });
 };
+
+const createVote = (userId: string, pollId: string): Promise<Vote> => {
+  return app.service('votes').create({
+    pollId,
+    which: _.sample(choices)
+  }, { user: { _id: userId } });
+}
 
 
 const populate = async () => {
   const users = await bluebird.map(names, name => createUser(name));
 
-  await bluebird.mapSeries(new Array(POLLS_AMOUNT), async () => {
-    const sampleUser = _.sample(users);
-    return createPoll(sampleUser?._id);
+  const polls = await bluebird.mapSeries(new Array(POLLS_AMOUNT), async () => {
+    const user = _.sample(users);
+    return createPoll(user?._id || '');
+  });
+
+  const votes = await bluebird.map(users, user => {
+    const pollsToVote = _.sampleSize(polls, _.random(0, POLLS_AMOUNT));
+    return bluebird.map(pollsToVote, poll => createVote(user?._id || '', poll?._id || ''));
   });
 };
 

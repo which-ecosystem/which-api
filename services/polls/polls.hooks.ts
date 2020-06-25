@@ -1,12 +1,8 @@
-import {
-  expandAuthorHook,
-  expandAuthorManyHook
-} from '../../hooks/expandAuthor';
+import convertPoll from '../../hooks/convertPoll';
 
 export default {
   after: {
-    get: [expandAuthorHook],
-    find: [expandAuthorManyHook]
+    all: [convertPoll],
   }
 };
 

@@ -1,24 +1,21 @@
 import { Document, Schema } from 'mongoose';
+import { User } from 'which-types';
 
-export interface User {
-  name: string;
-  avatarUrl?: string;
-  age?: number;
-}
-
-export interface UserSchema extends Document, User {
+export interface UserSchema extends Document, Omit<User, '_id'> {
   password: string;
 }
 
 export const userSchema = new Schema({
-  name: String,
+  username: String,
   password: String,
+  email: String,
   avatarUrl: {
     type: String,
     required: false
   },
   age: {
-    type: Number
+    type: Number,
+    required: false
   }
-});
+}, { timestamps: true });
 
