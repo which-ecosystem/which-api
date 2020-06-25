@@ -22,7 +22,9 @@ export default async (context: HookContext): Promise<HookContext> => {
       { left: { votes: 0 }, right: { votes: 0 } }
     ));
 
-    const userChoice = await VoteModel.findOne({ pollId: poll._id, userId: user?._id });
+    const userChoice = await VoteModel.findOne(
+      { pollId: poll._id, userId: user?._id }
+    ).then(vote => vote?.which);
 
     return _.merge(
       _.omit(poll, ['authorId']),
