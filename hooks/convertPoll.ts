@@ -19,7 +19,7 @@ export default async (context: HookContext): Promise<HookContext> => {
       { $group: { _id: '$which', total: { $sum: 1 } } }
     ]).then(groups => groups.reduce(
       (acc, group) =>  _.set(acc, group._id + '.votes', group.total),
-      {}
+      { left: { votes: 0 }, right: { votes: 0 } }
     ));
 
     const userChoice = await VoteModel.findOne({ pollId: poll._id, userId: user?._id });
