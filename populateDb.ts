@@ -36,7 +36,7 @@ const choices = [
 
 const createPoll = (authorId: string): Promise<Poll> => {
   const generateImageData = () => ({
-    url: _.sample(imageUrls) || '',
+    url: _.sample(imageUrls) || ''
   });
 
   return app.service('polls').create({
@@ -61,7 +61,7 @@ const createVote = (userId: string, pollId: string): Promise<Vote> => {
     pollId,
     which: _.sample(choices)
   }, { user: { _id: userId } });
-}
+};
 
 
 const populate = async () => {
@@ -72,7 +72,7 @@ const populate = async () => {
     return createPoll(user?._id || '');
   });
 
-  const votes = await bluebird.map(users, user => {
+  await bluebird.map(users, user => {
     const pollsToVote = _.sampleSize(polls, _.random(0, POLLS_AMOUNT));
     return bluebird.map(pollsToVote, poll => createVote(user?._id || '', poll?._id || ''));
   });

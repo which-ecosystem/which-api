@@ -18,6 +18,6 @@ export default (app: Application): void => {
     before: {
       all: tryAuthenticate
     }
-  })
+  });
 };
 

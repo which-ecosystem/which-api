@@ -6,7 +6,7 @@ const hashPassword = hooks.hashPassword('password');
 const localDispatch = async (context: HookContext): Promise<HookContext> => {
   context.result = context.dispatch;
   return context;
-}
+};
 
 export default {
   after: {

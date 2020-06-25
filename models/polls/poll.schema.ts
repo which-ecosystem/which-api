@@ -15,7 +15,7 @@ export interface PollSchema extends Document {
 }
 
 export const imageDataSchema = {
-  url: String,
+  url: String
 };
 
 export const pollSchema = new Schema({
