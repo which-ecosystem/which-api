@@ -13,6 +13,7 @@
     "@feathersjs/authentication": "^4.5.3",
     "@feathersjs/authentication-local": "^4.5.4",
     "@feathersjs/configuration": "^4.5.3",
+    "@feathersjs/errors": "^4.5.3",
     "@feathersjs/express": "^4.5.4",
     "@feathersjs/feathers": "^4.5.3",
     "@feathersjs/socketio": "^4.5.4",
@@ -22,7 +23,7 @@
     "feathers-mongoose": "^8.3.0",
     "lodash": "^4.17.15",
     "mongoose": "^5.9.18",
-    "which-types": "^1.4.0"
+    "which-types": "^1.4.1"
   },
   "repository": {
     "type": "git",
