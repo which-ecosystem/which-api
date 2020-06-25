@@ -8,7 +8,6 @@ import app from './app';
 mongoose.connect('mongodb://localhost:27017/which', { useNewUrlParser: true });
 
 const POLLS_AMOUNT = 20;
-const VOTES_AMOUNT = 160;
 
 const imageUrls: string[] = [
   // eslint-disable max-len
@@ -59,10 +58,9 @@ const createUser = (username: string): Promise<User> => {
 
 const createVote = (userId: string, pollId: string): Promise<Vote> => {
   return app.service('votes').create({
-    userId,
     pollId,
     which: _.sample(choices)
-  });
+  }, { user: { _id: userId } });
 }
 
 
@@ -72,13 +70,11 @@ const populate = async () => {
   const polls = await bluebird.mapSeries(new Array(POLLS_AMOUNT), async () => {
     const user = _.sample(users);
     return createPoll(user?._id || '');
-
   });
 
-  const votes = await bluebird.mapSeries(new Array(VOTES_AMOUNT), async () => {
-    const user = _.sample(users);
-    const poll = _.sample(polls);
-    return createVote(user?._id || '', poll?._id || '');
+  const votes = await bluebird.map(users, user => {
+    const pollsToVote = _.sampleSize(polls, _.random(0, POLLS_AMOUNT));
+    return bluebird.map(pollsToVote, poll => createVote(user?._id || '', poll?._id || ''));
   });
 };
 
