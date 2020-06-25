@@ -2,7 +2,6 @@ import { Document, Schema, Types } from 'mongoose';
 
 export interface ImageDataSchema {
   url: string;
-  votes: string[];
 }
 
 export interface PollSchema extends Document {
@@ -17,12 +16,6 @@ export interface PollSchema extends Document {
 
 export const imageDataSchema = {
   url: String,
-  votes: [
-    {
-      type: Types.ObjectId,
-      ref: 'vote'
-    }
-  ]
 };
 
 export const pollSchema = new Schema({

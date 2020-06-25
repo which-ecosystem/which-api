@@ -1,10 +1,13 @@
 import { Application } from '@feathersjs/express';
-import Votes from './votes.class';
+import service from 'feathers-mongoose';
+import Model from '../../models/votes/vote.model';
 
 import hooks from './votes.hooks';
 
+const VoteService = service({ Model });
+
 export default (app: Application): void => {
-  app.use('/polls/:id/votes/', new Votes());
-  app.service('/polls/:id/votes/').hooks(hooks);
+  app.use('/votes/', VoteService);
+  app.service('votes').hooks(hooks);
 };
 
