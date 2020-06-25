@@ -1,12 +1,15 @@
+import { HookContext } from '@feathersjs/feathers';
 import { authenticate } from '@feathersjs/authentication';
-import convertPoll from '../../hooks/convertPoll';
+
+const addUserId = async (context: HookContext): Promise<HookContext> => {
+  const { params: { user} } = context;
+  context.data.userId = user._id;
+  return context;
+};
 
 export default {
   before: {
-    create: [authenticate('jwt')]
-  },
-  after: {
-    all: [convertPoll]
+    create: [authenticate('jwt'), addUserId]
   }
 };
 

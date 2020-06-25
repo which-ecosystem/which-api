@@ -7,7 +7,7 @@ import hooks from './votes.hooks';
 const VoteService = service({ Model });
 
 export default (app: Application): void => {
-  app.use('/votes/', VoteService);
+  app.use('/votes', VoteService);
   app.service('votes').hooks(hooks);
 };
 
