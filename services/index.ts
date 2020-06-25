@@ -7,6 +7,7 @@ import Auth from './auth/auth.service';
 
 import tryAuthenticate from '../hooks/tryAuthenticate';
 import logging from '../hooks/logging';
+import handleErrors from '../hooks/handleErrors';
 
 export default (app: Application): void => {
   app.configure(Auth);
@@ -17,10 +18,10 @@ export default (app: Application): void => {
 
   app.hooks({
     before: {
-      all: tryAuthenticate
+      all: [tryAuthenticate, logging]
     },
-    after: {
-      all: logging
+    error: {
+      all: handleErrors
     }
   });
 };
