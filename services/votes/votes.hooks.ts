@@ -1,5 +1,5 @@
 import { HookContext } from '@feathersjs/feathers';
-import { authenticate } from '@feathersjs/authentication';
+import requireAuth from '../../hooks/requireAuth';
 
 const addUserId = async (context: HookContext): Promise<HookContext> => {
   const { params: { user} } = context;
@@ -9,7 +9,7 @@ const addUserId = async (context: HookContext): Promise<HookContext> => {
 
 export default {
   before: {
-    create: [authenticate('jwt'), addUserId]
+    create: [requireAuth, addUserId]
   }
 };
 

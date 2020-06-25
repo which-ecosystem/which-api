@@ -5,11 +5,19 @@ import Profiles from './profiles/profiles.service';
 import Votes from './votes/votes.service';
 import Auth from './auth/auth.service';
 
+import tryAuthenticate from '../hooks/tryAuthenticate';
+
 export default (app: Application): void => {
   app.configure(Auth);
   app.configure(Users);
   app.configure(Polls);
   app.configure(Profiles);
   app.configure(Votes);
+
+  app.hooks({
+    before: {
+      all: tryAuthenticate
+    }
+  })
 };
 
