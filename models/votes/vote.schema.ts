@@ -16,7 +16,7 @@ export const voteSchema = new Schema({
   },
   which: {
     type: String,
-    match: /left|right/g
+    enum: ['left', 'right']
   }
 }, { timestamps: true });
 
