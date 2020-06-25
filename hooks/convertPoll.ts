@@ -1,32 +1,33 @@
 import { HookContext } from '@feathersjs/feathers';
+import { Types } from 'mongoose';
 import bluebird from 'bluebird';
 import _ from 'lodash';
-import { Poll, User } from 'which-types';
+import { Poll, User, Vote } from 'which-types';
 
 import { PollSchema } from '../models/polls/poll.schema';
+import VoteModel from '../models/votes/vote.model';
 
 
 export default async (context: HookContext): Promise<HookContext> => {
-  const { app, result } = context;
+  const { app, result, params: { user } } = context;
 
   const convert = async (poll: PollSchema): Promise<Poll | null> => {
-    return app.service('users').get(poll.authorId)
-      .then((author: User | null): Poll | null => {
-        return author && _.merge(
-          _.omit(poll, ['authorId']),
-          {
-            author,
-            contents: {
-              left: {
-                votes: poll.contents.left.votes.length
-              },
-              right: {
-                votes: poll.contents.right.votes.length
-              }
-            }
-          }
-        );
-      });
+    const author = await app.service('users').get(poll.authorId);
+
+    const contents = await VoteModel.aggregate([
+      { $match: { pollId: Types.ObjectId(poll._id) } },
+      { $group: { _id: '$which', total: { $sum: 1 } } }
+    ]).then(groups => groups.reduce(
+      (acc, group) =>  _.set(acc, group._id + '.votes', group.total),
+      {}
+    ));
+
+    const userChoice = await VoteModel.findOne({ pollId: poll._id, userId: user?._id });
+
+    return _.merge(
+      _.omit(poll, ['authorId']),
+      { author, contents, userChoice }
+    );
   };
 
   if (Array.isArray(result)) {
