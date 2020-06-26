@@ -24,6 +24,7 @@
     "feathers-mongoose": "^8.3.0",
     "lodash": "^4.17.15",
     "mongoose": "^5.9.18",
+    "ts-node": "^8.10.2",
     "typescript": "^3.9.5",
     "which-types": "^1.4.1"
   },
