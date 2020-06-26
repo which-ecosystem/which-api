@@ -1,9 +1,20 @@
-import { PollSchema } from '../../models/polls/poll.schema';
-import PollModel from '../../models/polls/poll.model';
+import { Application } from '@feathersjs/express';
+import { Poll } from 'which-types';
+
 
 export default class Profiles {
-  async get(id: string): Promise<PollSchema[]> {
-    return PollModel.find({ authorId: id }).lean();
+  app!: Application;
+
+  async get(id: string): Promise<Poll[]> {
+    return this.app.service('polls').find({
+      query: {
+        authorId: id
+      }
+    });
+  }
+
+  setup (app: Application) {
+    this.app = app;
   }
 }
 
