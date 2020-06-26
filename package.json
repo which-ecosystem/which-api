@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.ts",
   "scripts": {
+    "start": "ts-node index.ts",
     "lint": "eslint . --ext ts --max-warnings 0",
     "test": "npm run lint"
   },
@@ -23,6 +24,7 @@
     "feathers-mongoose": "^8.3.0",
     "lodash": "^4.17.15",
     "mongoose": "^5.9.18",
+    "typescript": "^3.9.5",
     "which-types": "^1.4.1"
   },
   "repository": {
@@ -43,7 +45,6 @@
     "@typescript-eslint/parser": "^3.2.0",
     "eslint": "^7.2.0",
     "eslint-config-airbnb-typescript": "^8.0.2",
-    "eslint-plugin-import": "^2.21.2",
-    "typescript": "^3.9.5"
+    "eslint-plugin-import": "^2.21.2"
   }
 }
