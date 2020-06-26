@@ -6,9 +6,20 @@ export interface UserSchema extends Document, Omit<User, '_id'> {
 }
 
 export const userSchema = new Schema({
-  username: String,
-  password: String,
+  username: {
+    type: String,
+    unique: true,
+    required: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
   email: String,
+  verified: {
+    type: Boolean,
+    default: false
+  },
   avatarUrl: {
     type: String,
     required: false
