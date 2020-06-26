@@ -4,7 +4,17 @@ import app from './app';
 
 mongoose.Promise = Promise;
 
-mongoose.connect('mongodb://localhost:27017/which', { useNewUrlParser: true });
+
+const MONGODB_URL = process.env.MONGODB_URI || 'mongodb://localhost:27017/which';
+const PORT = process.env.PORT || 3030;
+
+mongoose.connect(MONGODB_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+  useFindAndModify: false,
+  family: 4 // Use IPv4, skip trying IPv6
+});
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -18,6 +28,5 @@ app.on('connection', connection => app.channel('everybody').join(connection));
 app.publish(() => app.channel('everybody'));
 
 
-const port = 3030;
-app.listen(port).on('listening', () => console.log(`Feathers server listening on localhost:${port}`));
+app.listen(PORT).on('listening', () => console.log(`Feathers server listening on localhost:${PORT}`));
 
