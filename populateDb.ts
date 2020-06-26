@@ -5,7 +5,15 @@ import { User, Poll, Vote } from 'which-types';
 
 import app from './app';
 
-mongoose.connect('mongodb://localhost:27017/which', { useNewUrlParser: true });
+const MONGODB_URL = process.env.MONGODB_URI || 'mongodb://localhost:27017/which';
+
+mongoose.connect(MONGODB_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+  useFindAndModify: false,
+  family: 4 // Use IPv4, skip trying IPv6
+});
 
 const POLLS_AMOUNT = 20;
 
