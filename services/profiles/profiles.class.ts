@@ -13,7 +13,7 @@ export default class Profiles {
     });
   }
 
-  setup (app: Application) {
+  setup(app: Application): void {
     this.app = app;
   }
 }

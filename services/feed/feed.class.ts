@@ -10,7 +10,7 @@ export default class Feed {
     return this.app.service('polls').find(params);
   }
 
-  setup (app: Application) {
+  setup(app: Application): void {
     this.app = app;
   }
 }
