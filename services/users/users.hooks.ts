@@ -1,13 +1,9 @@
 import _ from 'lodash';
 import { hooks } from '@feathersjs/authentication-local';
+import { discard } from 'feathers-hooks-common';
 import { HookContext } from '@feathersjs/feathers';
 
 const hashPassword = hooks.hashPassword('password');
-
-const localDispatch = async (context: HookContext): Promise<HookContext> => {
-  context.result = context.dispatch;
-  return context;
-};
 
 const ignoreCaseRegex = async (context: HookContext): Promise<HookContext> => {
   context.params.query = _.mapValues(context.params.query, data => {
@@ -19,7 +15,7 @@ const ignoreCaseRegex = async (context: HookContext): Promise<HookContext> => {
 export default {
   after: {
     all: hooks.protect('password'),
-    get: localDispatch, // Protect password from local get's
+    get: discard('password'), // Protect password from local get's
   },
   before: {
     find: ignoreCaseRegex,
