@@ -1,16 +1,13 @@
 import { Application } from '@feathersjs/express';
+import { Params } from '@feathersjs/feathers';
 import { Poll } from 'which-types';
 
 
-export default class Profiles {
+export default class Feed {
   app!: Application;
 
-  async get(id: string): Promise<Poll[]> {
-    return this.app.service('polls').find({
-      query: {
-        authorId: id
-      }
-    });
+  async find(params: Params): Promise<Poll[]> {
+    return this.app.service('polls').find(params);
   }
 
   setup(app: Application): void {
