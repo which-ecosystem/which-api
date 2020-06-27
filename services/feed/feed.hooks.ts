@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { HookContext } from '@feathersjs/feathers';
-import { iff, combine } from 'feathers-hooks-common';
+import { iff } from 'feathers-hooks-common';
 import isAuthenticated from '../../hooks/isAuthenticated';
 
 const raiseNewVerifedPolls = async (context: HookContext): Promise<HookContext> => {
@@ -25,7 +25,7 @@ export default {
   after: {
     find: [
       iff(isAuthenticated, raiseNewVerifedPolls),
-      iff(isAuthenticated, lowerOldPolls),
+      iff(isAuthenticated, lowerOldPolls)
     ]
   }
 };

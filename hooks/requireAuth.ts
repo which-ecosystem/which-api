@@ -4,6 +4,8 @@ import isAuthenticated from './isAuthenticated';
 
 export default iff(
   isNot(isAuthenticated),
-  () => { throw new NotAuthenticated('This endpoint requires auth!') }
+  () => {
+    throw new NotAuthenticated('This endpoint requires auth!');
+  }
 );
 
