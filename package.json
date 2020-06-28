@@ -33,7 +33,7 @@
     "mongoose": "^5.9.18",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.5",
-    "which-types": "^1.5.1"
+    "which-types": "^1.6.1"
   },
   "repository": {
     "type": "git",
