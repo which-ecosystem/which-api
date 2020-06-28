@@ -15,7 +15,7 @@ const ignoreCaseRegex = async (context: HookContext): Promise<HookContext> => {
 export default {
   after: {
     all: hooks.protect('password'),
-    get: discard('password'), // Protect password from local get's
+    get: discard('password') // Protect password from local get's
   },
   before: {
     find: ignoreCaseRegex,

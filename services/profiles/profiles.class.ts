@@ -6,7 +6,7 @@ import { Poll } from 'which-types';
 export default class Profiles {
   app!: Application;
 
-  async get(id: string, params: Params ): Promise<Poll[]> {
+  async get(id: string, params: Params): Promise<Poll[]> {
     return this.app.service('polls').find({
       ...params,
       query: {
