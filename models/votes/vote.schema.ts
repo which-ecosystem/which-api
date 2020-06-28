@@ -1,7 +1,7 @@
 import { Document, Schema, Types } from 'mongoose';
 import { Vote } from 'which-types';
 
-export interface VoteSchema extends Document, Omit<Vote, '_id'> {};
+export interface VoteSchema extends Document, Omit<Vote, '_id'> {}
 
 export const voteSchema = new Schema({
   authorId: {

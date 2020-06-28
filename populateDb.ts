@@ -1,7 +1,12 @@
 import mongoose from 'mongoose';
 import bluebird from 'bluebird';
 import _ from 'lodash';
-import { User, Poll, Vote, Feedback } from 'which-types';
+import {
+  User,
+  Poll,
+  Vote,
+  Feedback
+} from 'which-types';
 
 import app from './app';
 
