@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import bluebird from 'bluebird';
 import _ from 'lodash';
-import { User, Poll, Vote } from 'which-types';
+import { User, Poll, Vote, Feedback } from 'which-types';
 
 import app from './app';
 
@@ -71,6 +71,13 @@ const createVote = (userId: string, pollId: string): Promise<Vote> => {
   }, { user: { _id: userId }, authenticated: true });
 };
 
+const createFeedback = (userId: string): Promise<Feedback> => {
+  return app.service('feedback').create({
+    version: 'v1.0.0',
+    score: _.sample([1, 2, 3, 4, 5]),
+    content: 'Absolutely amazing!'
+  }, { user: { _id: userId }, authenticated: true });
+};
 
 const populate = async () => {
   const users = await bluebird.map(names, name => createUser(name));
@@ -78,6 +85,10 @@ const populate = async () => {
   const polls = await bluebird.mapSeries(new Array(POLLS_AMOUNT), async () => {
     const user = _.sample(users);
     return createPoll(user?._id || '');
+  });
+
+  await bluebird.map(users, user => {
+    return createFeedback(user?._id || '');
   });
 
   await bluebird.map(users, user => {

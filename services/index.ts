@@ -5,6 +5,7 @@ import Profiles from './profiles/profiles.service';
 import Votes from './votes/votes.service';
 import Auth from './auth/auth.service';
 import Feed from './feed/feed.service';
+import Feedback from './feedback/feedback.service';
 
 import tryAuthenticate from '../hooks/tryAuthenticate';
 import logging from '../hooks/logging';
@@ -17,6 +18,7 @@ export default (app: Application): void => {
   app.configure(Profiles);
   app.configure(Votes);
   app.configure(Feed);
+  app.configure(Feedback);
 
   app.hooks({
     before: {

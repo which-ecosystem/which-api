@@ -8,7 +8,7 @@ export interface FeedbackSchema extends Document {
   createdAt: Date;
 }
 
-export const FeedbackSchema = new Schema({
+export const feedbackSchema = new Schema({
   contents: String,
   authorId: {
     type: Types.ObjectId,
