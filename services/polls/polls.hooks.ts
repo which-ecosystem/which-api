@@ -6,6 +6,7 @@ import { Poll } from 'which-types';
 import { PollSchema } from '../../models/polls/poll.schema';
 import VoteModel from '../../models/votes/vote.model';
 import sortByDate from '../../hooks/sortByDate';
+import signAuthority from '../../hooks/signAuthority';
 
 
 const convertPoll = async (context: HookContext): Promise<HookContext> => {
@@ -44,7 +45,8 @@ const convertPoll = async (context: HookContext): Promise<HookContext> => {
 
 export default {
   before: {
-    find: sortByDate
+    find: sortByDate,
+    create: signAuthority
   },
   after: {
     all: convertPoll
