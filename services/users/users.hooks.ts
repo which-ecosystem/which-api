@@ -15,11 +15,11 @@ const ignoreCaseRegex = async (context: HookContext): Promise<HookContext> => {
 };
 
 const compareUser = async (context: HookContext): Promise<HookContext> => {
-  if(context.arguments[0] != context.params.user._id) {
+  if (context.arguments[0] !== context.params.user._id) {
     throw new NotAuthenticated('You can only PATCH/UPDATE your own user!');
   }
   return context;
-}
+};
 
 export default {
   after: {

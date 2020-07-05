@@ -56,7 +56,7 @@ const createPoll = (authorId: string): Promise<Poll> => {
     contents: {
       left: generateImageData(),
       right: generateImageData()
-    },
+    }
   }, { user: { _id: authorId }, authenticated: true });
 };
 
