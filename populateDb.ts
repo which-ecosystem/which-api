@@ -57,8 +57,7 @@ const createPoll = (authorId: string): Promise<Poll> => {
       left: generateImageData(),
       right: generateImageData()
     },
-    authorId
-  });
+  }, { user: { _id: authorId }, authenticated: true });
 };
 
 const createUser = (username: string): Promise<User> => {
@@ -69,18 +68,18 @@ const createUser = (username: string): Promise<User> => {
   });
 };
 
-const createVote = (userId: string, pollId: string): Promise<Vote> => {
+const createVote = (authorId: string, pollId: string): Promise<Vote> => {
   return app.service('votes').create({
     pollId,
     which: _.sample(choices)
-  }, { user: { _id: userId }, authenticated: true });
+  }, { user: { _id: authorId }, authenticated: true });
 };
 
 const createFeedback = (userId: string): Promise<Feedback> => {
   return app.service('feedback').create({
     version: 'v1.0.0',
     score: _.sample([1, 2, 3, 4, 5]),
-    content: 'Absolutely amazing!'
+    contents: 'Absolutely amazing!'
   }, { user: { _id: userId }, authenticated: true });
 };
 
