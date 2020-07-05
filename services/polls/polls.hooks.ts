@@ -1,4 +1,5 @@
 import { HookContext } from '@feathersjs/feathers';
+import { disallow } from 'feathers-hooks-common';
 import { Types } from 'mongoose';
 import bluebird from 'bluebird'; import _ from 'lodash';
 import { Poll } from 'which-types';
@@ -46,7 +47,10 @@ const convertPoll = async (context: HookContext): Promise<HookContext> => {
 export default {
   before: {
     find: sortByDate,
-    create: signAuthority
+    create: signAuthority,
+    remove: disallow('external'),
+    update: disallow('external'),
+    patch: disallow('external')
   },
   after: {
     all: convertPoll
