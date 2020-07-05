@@ -3,7 +3,8 @@ import { authenticate } from '@feathersjs/authentication';
 
 
 export default async (context: HookContext): Promise<HookContext> => {
-  if (context.params?.headers?.authorization && context.path !== 'authentication') {
+  const authorization = context.params?.headers?.authorization;
+  if (authorization && authorization !== 'null' && context.path !== 'authentication') {
     return authenticate('jwt')(context);
   }
   return context;
