@@ -6,6 +6,7 @@ import Votes from './votes/votes.service';
 import Auth from './auth/auth.service';
 import Feed from './feed/feed.service';
 import Feedback from './feedback/feedback.service';
+import Files from './files/files.service';
 
 import tryAuthenticate from '../hooks/tryAuthenticate';
 import logging from '../hooks/logging';
@@ -19,6 +20,7 @@ export default (app: Application): void => {
   app.configure(Votes);
   app.configure(Feed);
   app.configure(Feedback);
+  app.configure(Files);
 
   app.hooks({
     before: {
