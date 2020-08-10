@@ -1,19 +1,22 @@
 import { Application } from '@feathersjs/express';
 import { Params } from '@feathersjs/feathers';
-import { S3 } from 'aws-sdk';
-import { v4 as uuidv4 } from 'uuid';
+import { v4 } from 'uuid';
+
+// Use require to avoid bug
+// https://stackoverflow.com/questions/62611373/heroku-crashes-when-importing-aws-sdk
+const S3 = require('aws-sdk/clients/s3');
 
 
 export default class Files {
   app!: Application;
-  s3!: S3;
+  s3!: any;
   bucket!: string;
 
   async find(params: Params): Promise<string> {
     // Return signed upload URL
     return this.s3.getSignedUrl('putObject', {
       Bucket: this.bucket,
-      Key: `${params.user?.username}/${uuidv4()}.png`,
+      Key: `${params.user?.username}/${v4()}.png`,
       ContentType: 'image/*',
       Expires: 300,
     });
