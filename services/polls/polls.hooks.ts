@@ -55,7 +55,8 @@ export default {
   },
   after: {
     all: convertPoll,
-    create: fetchImages(['contents.left.url', 'contents.right.url'])
+    create: fetchImages(['contents.left.url', 'contents.right.url']),
+    patch: fetchImages(['contents.left.url', 'contents.right.url'])
   }
 };
 
