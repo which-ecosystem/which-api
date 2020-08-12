@@ -8,7 +8,8 @@ import {
   Feedback
 } from 'which-types';
 
-import app from './app';
+import app from '../app';
+app.service('files').setup(app);
 
 const MONGODB_URL = process.env.MONGODB_URI || 'mongodb://localhost:27017/which';
 
@@ -20,7 +21,7 @@ mongoose.connect(MONGODB_URL, {
   family: 4 // Use IPv4, skip trying IPv6
 });
 
-const POLLS_AMOUNT = 20;
+const POLLS_AMOUNT = 5;
 
 const imageUrls: string[] = [
   // eslint-disable max-len
@@ -31,14 +32,14 @@ const imageUrls: string[] = [
 ];
 
 const names: string[] = [
-  'Emma',
-  'Elise',
-  'Jack',
-  'Oliver',
-  'Jamie',
-  'Adam',
-  'Jordan',
-  'William'
+  'emma',
+  'elise',
+  'jack',
+  'oliver',
+  'jamie',
+  'adam',
+  'jordan',
+  'william'
 ];
 
 const choices = [
@@ -101,5 +102,5 @@ const populate = async () => {
   });
 };
 
-populate().finally(mongoose.disconnect);
+populate();
 
