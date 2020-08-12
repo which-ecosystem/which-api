@@ -4,7 +4,13 @@ import _ from 'lodash';
 
 
 export default (paths: string[]) => async (context: HookContext): Promise<HookContext> => {
-  const { service, app, result, params: { user } } = context;
+  const {
+    service,
+    app,
+    result,
+    params: { user }
+  } = context;
+
   const fileService = app.service('files');
   const model = service.Model;
 
