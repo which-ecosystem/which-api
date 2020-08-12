@@ -4,6 +4,7 @@ import { discard, disallow } from 'feathers-hooks-common';
 import { HookContext } from '@feathersjs/feathers';
 import { NotAuthenticated } from '@feathersjs/errors';
 import requireAuth from '../../hooks/requireAuth';
+import fetchImages from '../../hooks/fetchImages';
 
 const hashPassword = hooks.hashPassword('password');
 
@@ -24,6 +25,8 @@ const compareUser = async (context: HookContext): Promise<HookContext> => {
 export default {
   after: {
     all: hooks.protect('password'),
+    create: fetchImages(['avatarUrl']),
+    patch: fetchImages(['avatarUrl']),
     get: discard('password') // Protect password from local get's
   },
   before: {

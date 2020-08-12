@@ -8,6 +8,7 @@ import { PollSchema } from '../../models/polls/poll.schema';
 import VoteModel from '../../models/votes/vote.model';
 import sortByDate from '../../hooks/sortByDate';
 import signAuthority from '../../hooks/signAuthority';
+import fetchImages from '../../hooks/fetchImages';
 
 
 const convertPoll = async (context: HookContext): Promise<HookContext> => {
@@ -53,7 +54,8 @@ export default {
     patch: disallow('external')
   },
   after: {
-    all: convertPoll
+    all: convertPoll,
+    create: fetchImages(['contents.left.url', 'contents.right.url'])
   }
 };
 
