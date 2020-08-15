@@ -22,6 +22,8 @@ export default (app: Application): void => {
   app.configure(Feedback);
   app.configure(Files);
 
+  app.get('/ping', (req, res) => res.send('pong'));
+
   app.hooks({
     before: {
       all: [tryAuthenticate, logging]
