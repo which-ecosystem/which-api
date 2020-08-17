@@ -24,13 +24,18 @@ export default class Files {
   }
 
   public isS3url(url: string): boolean {
-    return url.startsWith(`https://${this.bucket}.s3`);
+    return url?.startsWith(`https://${this.bucket}.s3`);
   }
 
   public generateS3Path(prefix = '', ext = 'png'): string {
     const key = v4();
     const fileName = `${key}.${ext}`;
     return prefix ? `${prefix}/${fileName}` : fileName;
+  }
+
+  public getS3PathFromUrl(url: string): string {
+    const dotComIndex = url.indexOf('.com');
+    return url.slice(dotComIndex + 5);
   }
 
   async getUploadUrl(path: string): Promise<string> {
@@ -79,6 +84,13 @@ export default class Files {
     }).promise();
     fs.unlinkSync(filePath);
     return this.getDownloadUrl(s3Path);
+  }
+
+  async deleteFile(s3Path: string): Promise<void> {
+    return this.s3.deleteObject({
+      Bucket: this.bucket,
+      Key: s3Path
+    }).promise();
   }
 
   setup(app: Application): void {

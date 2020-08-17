@@ -1,5 +1,6 @@
 import { HookContext } from '@feathersjs/feathers';
 import { disallow } from 'feathers-hooks-common';
+import { NotAuthenticated } from '@feathersjs/errors';
 import { Types } from 'mongoose';
 import bluebird from 'bluebird'; import _ from 'lodash';
 import { Poll } from 'which-types';
@@ -9,6 +10,7 @@ import VoteModel from '../../models/votes/vote.model';
 import sortByDate from '../../hooks/sortByDate';
 import signAuthority from '../../hooks/signAuthority';
 import fetchImages from '../../hooks/fetchImages';
+import deleteImages from '../../hooks/deleteImages';
 
 
 const convertPoll = async (context: HookContext): Promise<HookContext> => {
@@ -44,12 +46,24 @@ const convertPoll = async (context: HookContext): Promise<HookContext> => {
   return context;
 };
 
+const onDelete = async (context: HookContext): Promise<HookContext> => {
+  const { params: { user }, service, id } = context;
+  if (id) {
+    const { author } = await service.get(id);
+    if (author._id.toString() !== user._id.toString()) {
+      throw new NotAuthenticated('You can only DELETE your own posts!');
+    }
+    VoteModel.deleteMany({ pollId: id.toString() });
+  }
+  return context;
+};
+
 
 export default {
   before: {
     find: sortByDate,
     create: signAuthority,
-    remove: disallow('external'),
+    remove: [onDelete, deleteImages(['contents.left.url', 'contents.right.url'])],
     update: disallow('external'),
     patch: disallow('external')
   },
