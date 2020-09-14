@@ -42,7 +42,7 @@
     "ts-node": "^8.10.2",
     "typescript": "^3.9.5",
     "uuid": "^8.3.0",
-    "which-types": "^1.6.1"
+    "which-types": "^1.6.2"
   },
   "repository": {
     "type": "git",
