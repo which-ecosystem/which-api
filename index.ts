@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import Promise from 'bluebird';
+import './env';
 import app from './app';
 
 mongoose.Promise = Promise;
