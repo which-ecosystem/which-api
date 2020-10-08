@@ -11,6 +11,7 @@ export interface PollSchema extends Document {
   };
   createdAt: Date;
   authorId: string;
+  description: string;
   vote: (userId: string, which: 'left' | 'right') => PollSchema;
 }
 
@@ -26,6 +27,7 @@ export const pollSchema = new Schema({
   authorId: {
     type: Types.ObjectId,
     ref: 'User'
-  }
+  },
+  description: String
 }, { timestamps: true });
 
