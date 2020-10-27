@@ -1,0 +1,13 @@
+version: '3'
+services:
+  app:
+    container_name: which-api
+    restart: always
+    build: .
+    ports:
+      - '3030:3030'
+    links:
+      - db
+  db:
+    container_name: mongo
+    image: mongo
