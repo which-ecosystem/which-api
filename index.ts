@@ -6,10 +6,13 @@ import app from './app';
 mongoose.Promise = Promise;
 
 
-const MONGODB_URL = process.env.MONGODB_URI || 'mongodb://localhost:27017/which';
 const PORT = process.env.PORT || 3030;
+const MONGODB_URL = process.env.MONGODB_URI || 'mongodb://localhost:27017/which';
+const { MONGODB_USER, MONGODB_PASSWORD } = process.env;
 
 mongoose.connect(MONGODB_URL, {
+  user: MONGODB_USER,
+  pass: MONGODB_PASSWORD,
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
