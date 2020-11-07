@@ -1,9 +1,16 @@
+# Build and run which-api with database in container
+#
+# If you are getting "port already in use" error,
+# try changing exposed ports, e.g 27017:27017 -> 27018:27017
+
 version: '3'
 services:
   app:
     container_name: which-api
     restart: always
     build: .
+    environment:
+      - MONGODB_URI=mongodb://db:27017/which
     ports:
       - '3030:3030'
     links:
