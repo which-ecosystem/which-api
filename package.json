@@ -38,7 +38,7 @@
     "dotenv": "^8.2.0",
     "feathers-hooks-common": "^5.0.3",
     "feathers-mongoose": "^8.3.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "mongoose": "^5.9.18",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.5",
